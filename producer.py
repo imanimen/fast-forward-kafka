@@ -1,18 +1,19 @@
 from confluent_kafka import Producer
-import json
+import time
 
 producer = Producer({
-    'bootstrap.servers': 'localhost:9092'
+    'bootstrap.servers': 'localhost:9092,localhost:9093,localhost:9094',
+    'acks': 'all',
 })
 
 
-for i in range(100):
-    order = {
-        'order_id': i,
-        'customer_id': i % 10,
-        'amount': i * 100
-    }
+counter = 0
+
+while True:
+    producer.produce('events', value=str(counter))
+    producer.flush()
     
-    producer.produce('orders', key=str(order['customer_id']), value=json.dumps(order))
+    print(counter, 'was sent')
+    counter += 1
     
-producer.flush()
+    time.sleep(1)
