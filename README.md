@@ -11,7 +11,7 @@
     uv run consumer.py
 
 
-# Cluster & KRaft Mode
+# Cluster & KRaft Mode `feature/cluster-kraft`
     # Create Topic on kafka
     docker compose exec kafka-broker-1 /opt/kafka/bin/kafka-topics.sh --create --topic events --replication-factor 3 --bootstrap-server localhost:9092
 
